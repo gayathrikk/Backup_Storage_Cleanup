@@ -24,6 +24,7 @@ public class Backup_Storage_Cleanup {
             System.out.println("✅ MySQL JDBC Driver Registered");
 
             try (Connection conn = DriverManager.getConnection(url, username, password)) {
+
                 String query = "SELECT sd.bio_id, sd.bio_name, sb.assign_date " +
                         "FROM storage_backup sb " +
                         "JOIN storage_details sd ON sb.storage_details = sd.id " +
@@ -43,12 +44,13 @@ public class Backup_Storage_Cleanup {
                     }
 
                     if (!biosampleIds.isEmpty()) {
-                        System.out.println("⚠ Records with status 1 found. Sending storage cleanup pending email...");
+                        System.out.println("⚠ Records with status 1 found. Sending Storage cleanup pending email...");
                         sendEmailStorageCleanupPending(biosampleIds, brainNames, assignDates);
                     } else {
                         System.out.println("✅ No records with status 1. No action needed.");
                     }
                 }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,11 +58,10 @@ public class Backup_Storage_Cleanup {
     }
 
     private void sendEmailStorageCleanupPending(List<String> biosampleIds, List<String> brainNames, List<Date> assignDates) {
-        String from = "automationsoftware25@gmail.com";
-        String password = "wjzcgaramsqvagxu";
-        String[] to = {"nathan.i@htic.iitm.ac.in", "azizahammed.a@htic.iitm.ac.in"};
-
-        String[] cc = {"ramananv2024@gmail.com", "gayathri@htic.iitm.ac.in", "supriti@htic.iitm.ac.in"};
+        final String from = "automationsoftware25@gmail.com";
+        final String password = "wjzcgaramsqvagxu";
+        String[] to = {"gayuriche26@gmail.com", "azizahammed.a@htic.iitm.ac.in"};
+        String[] cc = {}; // Add CC if needed
 
         String subject = "🧠 Storage cleanup needed – Your brain samples are losing patience!";
 
@@ -111,7 +112,7 @@ public class Backup_Storage_Cleanup {
 
         bodyBuilder.append("</table>");
         bodyBuilder.append("<p>Please help us out soon – only then can we proudly proceed to the backup process! 😅</p>");
-        bodyBuilder.append("<p>Kindly complete the storage cleanup before we start organizing a brain strike! 🧠✊</p>");
+        bodyBuilder.append("<p>Kindly finish the storage cleanup before we start organizing a brain strike! 🧠✊</p>");
         bodyBuilder.append("<p style='color:gray;font-size:small;'>This is an automatically generated email. Please do not reply to this message.</p>");
         bodyBuilder.append("</body></html>");
 
@@ -119,14 +120,12 @@ public class Backup_Storage_Cleanup {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
 
-            // Add all "TO" recipients
             for (String recipient : to) {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
             }
 
-            // Add BCC recipients if any
-            for (String bccRecipient : cc) {
-                message.addRecipient(Message.RecipientType.CC, new InternetAddress(bccRecipient));
+            for (String ccRecipient : cc) {
+                message.addRecipient(Message.RecipientType.CC, new InternetAddress(ccRecipient));
             }
 
             message.setSubject(subject);
