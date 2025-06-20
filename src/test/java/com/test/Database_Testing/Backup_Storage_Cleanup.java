@@ -60,8 +60,8 @@ public class Backup_Storage_Cleanup {
     private void sendEmailStorageCleanupPending(List<String> biosampleIds, List<String> brainNames, List<Date> assignDates) {
         final String from = "automationsoftware25@gmail.com";
         final String password = "wjzcgaramsqvagxu";
-        String[] to = {"gayuriche26@gmail.com", "azizahammed.a@htic.iitm.ac.in"};
-        String[] cc = {}; // Add CC if needed
+        String[] to = {"nathan.i@htic.iitm.ac.in", "azizahammed.a@htic.iitm.ac.in"};
+       String[] cc = {"ramananv2024@gmail.com", "gayathri@htic.iitm.ac.in", "supriti@htic.iitm.ac.in"};
 
         String subject = "🧠 Storage cleanup needed – Your brain samples are losing patience!";
 
